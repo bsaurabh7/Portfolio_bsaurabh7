@@ -124,8 +124,28 @@
     @apply border-border outline-ring/50;
   }
 
+  html,
+  body,
+  #root {
+    min-width: 320px;
+  }
+
   body {
     @apply bg-background text-foreground;
+    overflow-x: clip;
+  }
+
+  #root {
+    overflow-x: clip;
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
   }
 
   /**

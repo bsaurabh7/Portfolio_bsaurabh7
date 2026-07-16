@@ -581,6 +581,9 @@ type TType = typeof T.en;
 
 type Page = "home"|"about-me"|"skills"|"projects"|"experience"|"certifications"|"education"|"achievements"|"contacts";
 const FC = "'Fira Code', monospace";
+const PAGE_SECTION_CLASS = "px-4 sm:px-6 lg:px-20 py-12 md:py-16";
+const HERO_SECTION_CLASS = "px-4 sm:px-6 lg:px-20 py-12 md:py-14";
+const PAGE_TITLE_CLASS = "text-[clamp(1.5rem,4vw,2rem)] leading-none";
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 function Dot() { return <svg width="4" height="4" viewBox="0 0 4 4" fill="none"><circle cx="2" cy="2" r="2" fill="#ABB2BF"/></svg>; }
@@ -612,27 +615,27 @@ function GlobeIcon({ size=17, color="#ABB2BF" }: { size?: number; color?: string
 // ── Shared UI ─────────────────────────────────────────────────────────────────
 function SH({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-[16px]">
-      <div className="flex items-start whitespace-nowrap" style={{ fontFamily:FC, fontWeight:500, fontSize:32, lineHeight:"normal" }}>
+    <div className="flex items-center gap-3 md:gap-4 min-w-0">
+      <div className={`flex items-start min-w-0 ${PAGE_TITLE_CLASS}`} style={{ fontFamily:FC, fontWeight:500, lineHeight:"normal" }}>
         <span style={{ color:"#c778dd" }}>#</span><span style={{ color:"#fff" }}>{label}</span>
       </div>
-      <div className="h-px flex-1 min-w-[40px]" style={{ background:"#c778dd" }}/>
+      <div className="h-px flex-1 min-w-[24px] self-center" style={{ background:"#c778dd" }}/>
     </div>
   );
 }
 function PH({ label, sub }: { label: string; sub?: string }) {
   return (
-    <div className="flex flex-col gap-[8px]">
-      <div className="flex items-start" style={{ fontFamily:FC, fontWeight:600, fontSize:32, lineHeight:"normal" }}>
+    <div className="flex flex-col gap-2 min-w-0">
+      <div className={`flex items-start min-w-0 ${PAGE_TITLE_CLASS}`} style={{ fontFamily:FC, fontWeight:600, lineHeight:"normal" }}>
         <span style={{ color:"#c778dd" }}>/</span><span style={{ color:"#fff" }}>{label}</span>
       </div>
-      {sub && <p style={{ fontFamily:FC, fontWeight:400, fontSize:16, color:"#abb2bf" }}>{sub}</p>}
+      {sub && <p className="text-sm sm:text-base" style={{ fontFamily:FC, fontWeight:400, color:"#abb2bf" }}>{sub}</p>}
     </div>
   );
 }
 function Btn({ children, purple=false, href, onClick }: { children: React.ReactNode; purple?: boolean; href?: string; onClick?: () => void }) {
-  const cls = "inline-flex items-center px-[16px] py-[8px] cursor-pointer transition-opacity hover:opacity-75";
-  const s: React.CSSProperties = { fontFamily:FC, fontWeight:500, fontSize:16, color:"#fff", lineHeight:"normal", whiteSpace:"nowrap", border:`1px solid ${purple?"#c778dd":"#abb2bf"}` };
+  const cls = "inline-flex max-w-full items-center justify-center px-[16px] py-[8px] cursor-pointer transition-opacity hover:opacity-75 whitespace-normal sm:whitespace-nowrap text-center";
+  const s: React.CSSProperties = { fontFamily:FC, fontWeight:500, fontSize:16, color:"#fff", lineHeight:"normal", border:`1px solid ${purple?"#c778dd":"#abb2bf"}` };
   if (href) return <a href={href} target="_blank" rel="noreferrer" className={cls} style={s}>{children}</a>;
   return <button onClick={onClick} className={cls} style={s}>{children}</button>;
 }
@@ -703,7 +706,7 @@ function MediaSidebar() {
 
 function SkillGrid({ t }: { t: TType }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 mt-[32px]">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mt-[32px] gap-4">
       {DATA.skills.map((g, i) => <SkillBlock key={i} category={t.skillCategories[i]} icon={g.icon} items={g.items}/>)}
     </div>
   );
@@ -789,8 +792,8 @@ function Footer({ t }: { t: TType }) {
   return (
     <footer>
       <div className="h-px w-full" style={{ background:"#abb2bf" }}/>
-      <div className="px-[24px] lg:px-[80px] py-[32px] flex flex-col gap-[32px] items-center">
-        <div className="flex items-start justify-between w-full flex-wrap gap-[32px]">
+      <div className={PAGE_SECTION_CLASS + " flex flex-col gap-8 items-center"}>
+        <div className="flex w-full flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="flex flex-col gap-[10px]">
             <div className="flex items-center gap-[8px]">
               <LogoMark/>
@@ -812,8 +815,8 @@ function Footer({ t }: { t: TType }) {
 function HomePage({ nav, t }: { nav: (p: Page) => void; t: TType }) {
   return (
     <div>
-      <section className="px-[24px] lg:px-[80px] py-[48px]">
-        <div className="grid lg:grid-cols-2 gap-[32px] items-center">
+      <section className={HERO_SECTION_CLASS}>
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-8">
           <div className="flex flex-col gap-[16px]">
             <div className="flex flex-col" style={{ gap:4 }}>
               <p style={{ fontFamily:FC, fontWeight:700, fontSize:"clamp(30px,5vw,58px)", color:"#fff", lineHeight:1.1, letterSpacing:"-0.02em" }}>
@@ -824,19 +827,19 @@ function HomePage({ nav, t }: { nav: (p: Page) => void; t: TType }) {
               </p>
             </div>
             <p style={{ fontFamily:FC, fontSize:16, color:"#abb2bf", maxWidth:480, lineHeight:"26px" }}>{t.tagline}</p>
-            <div className="flex flex-col gap-[5px] mt-[4px]">
-              <a href={`mailto:${DATA.personal.email}`} className="flex items-center gap-[8px] hover:opacity-75 transition-opacity w-fit">
-                <EmailIcon size={15}/><span style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>{DATA.personal.email}</span>
+            <div className="flex flex-col gap-[6px] mt-[4px] min-w-0">
+              <a href={`mailto:${DATA.personal.email}`} className="flex items-center gap-[8px] hover:opacity-75 transition-opacity w-fit max-w-full min-w-0">
+                <EmailIcon size={15}/><span className="break-all" style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>{DATA.personal.email}</span>
               </a>
-              <div className="flex items-center gap-[8px]"><PhoneIcon size={15}/><span style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>{DATA.personal.phone}</span></div>
-              <a href={`https://${DATA.personal.website}`} target="_blank" rel="noreferrer" className="flex items-center gap-[8px] hover:opacity-75 transition-opacity w-fit">
+              <div className="flex items-center gap-[8px] min-w-0"><PhoneIcon size={15}/><span className="break-words" style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>{DATA.personal.phone}</span></div>
+              <a href={`https://${DATA.personal.website}`} target="_blank" rel="noreferrer" className="flex items-center gap-[8px] hover:opacity-75 transition-opacity w-fit max-w-full min-w-0">
                 <GlobeIcon size={15}/><span style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>{DATA.personal.website}</span>
               </a>
             </div>
             <div className="mt-[4px]"><Btn purple onClick={() => nav("contacts")}>{t.contactBtn}</Btn></div>
           </div>
-          <div className="relative flex justify-center items-end" style={{ minHeight:300 }}>
-            <div className="absolute" style={{ left:"5%", top:"15%", width:104, height:104 }}>
+          <div className="relative flex min-h-[260px] items-end justify-center lg:min-h-[320px]">
+            <div className="absolute left-[5%] top-[15%] hidden h-[104px] w-[104px] sm:block">
               <div className="absolute" style={{ bottom:0, left:0, right:"50%", top:"25%" }}>
                 <svg className="w-full h-full" fill="none" viewBox="0 0 52.2178 78.3262">
                   <mask fill="white" id="m1"><path d={svgPathsBurger.p1834fd00}/></mask>
@@ -854,27 +857,27 @@ function HomePage({ nav, t }: { nav: (p: Page) => void; t: TType }) {
                 </div>
               </div>
             </div>
-            <div className="relative overflow-hidden" style={{ width:308, height:260 }}>
-              <img src={imgHeroPerson} alt={DATA.personal.name} className="absolute max-w-none" style={{ width:"142%", left:"-28.5%", top:"-19.61%", height:"210%" }}/>
+            <div className="relative aspect-[308/260] w-full max-w-[19.25rem] overflow-hidden sm:max-w-[21rem] lg:max-w-[20rem]">
+              <img src={imgHeroPerson} alt={DATA.personal.name} className="absolute inset-0 h-full w-full object-cover object-[center_18%]"/>
             </div>
-            <div className="absolute" style={{ bottom:0, right:"2%" }}><DotGrid rows={5} cols={5}/></div>
+            <div className="absolute bottom-0 right-[2%] hidden sm:block"><DotGrid rows={5} cols={5}/></div>
           </div>
         </div>
-        <div className="mt-[32px] flex items-center gap-[10px] px-[8px] py-[8px] w-fit max-w-full" style={{ border:"1px solid #abb2bf" }}>
+        <div className="mt-8 flex w-full max-w-full flex-col gap-2 px-3 py-3 sm:w-fit sm:flex-row sm:items-center sm:gap-[10px]" style={{ border:"1px solid #abb2bf" }}>
           <div className="shrink-0 size-[16px]" style={{ background:"#c778dd" }}/>
-          <p style={{ fontFamily:FC, fontSize:16, color:"#abb2bf" }}>{t.currentlyOn} <span style={{ fontWeight:600, color:"#fff" }}>{t.currentlyOnValue}</span></p>
+          <p className="text-sm sm:text-base break-words" style={{ fontFamily:FC, color:"#abb2bf" }}>{t.currentlyOn} <span style={{ fontWeight:600, color:"#fff" }}>{t.currentlyOnValue}</span></p>
         </div>
 
         {/* Career Roadmap */}
         <div className="mt-[40px]">
-          <div className="flex items-center gap-[10px] mb-[20px]">
+          <div className="flex items-center gap-[10px] mb-[20px] min-w-0">
             <span style={{ fontFamily:FC, fontWeight:500, fontSize:14, color:"#c778dd" }}>#{t.roadmapLabel}</span>
           </div>
-          <div className="flex flex-wrap items-center gap-y-[12px]">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-3">
             {t.roadmap.map((role, i) => (
               <div key={i} className="flex items-center">
                 <div
-                  className="px-[12px] py-[7px] flex items-center"
+                  className="px-[12px] py-[7px] flex items-center max-w-full text-center"
                   style={{
                     fontFamily: FC,
                     fontSize: 13,
@@ -882,7 +885,7 @@ function HomePage({ nav, t }: { nav: (p: Page) => void; t: TType }) {
                     color: i === 2 ? "#c778dd" : i === 6 ? "#fff" : "#abb2bf",
                     border: `1px solid ${i === 2 ? "#c778dd" : i === 6 ? "#abb2bf" : "#3d4451"}`,
                     background: i === 2 ? "rgba(199,120,221,0.08)" : i === 6 ? "rgba(171,178,191,0.06)" : "transparent",
-                    whiteSpace: "nowrap",
+                    whiteSpace: "normal",
                   }}
                 >
                   {role}
@@ -896,11 +899,11 @@ function HomePage({ nav, t }: { nav: (p: Page) => void; t: TType }) {
         </div>
       </section>
 
-      <section className="px-[24px] lg:px-[80px] py-[64px] flex justify-center">
-        <div className="relative max-w-[900px] w-full text-center">
-          <span className="absolute -top-[20px] left-0" style={{ fontFamily:FC, fontWeight:600, fontSize:48, color:"#abb2bf", lineHeight:1 }}>"</span>
-          <p style={{ fontFamily:FC, fontWeight:600, fontSize:"clamp(20px,3vw,32px)", color:"#fff", lineHeight:1.35, padding:"0 32px" }}>{t.quote}</p>
-          <span className="absolute -bottom-[24px] right-0" style={{ fontFamily:FC, fontWeight:600, fontSize:48, color:"#abb2bf", lineHeight:1 }}>"</span>
+      <section className="px-4 sm:px-6 lg:px-20 py-16 md:py-20 flex justify-center">
+        <div className="relative w-full max-w-[900px] text-center">
+          <span className="absolute -top-[20px] left-0 text-[2.5rem] leading-none sm:text-[3rem]" style={{ fontFamily:FC, fontWeight:600, color:"#abb2bf" }}>"</span>
+          <p className="px-6 sm:px-8" style={{ fontFamily:FC, fontWeight:600, fontSize:"clamp(20px,3vw,32px)", color:"#fff", lineHeight:1.35 }}>{t.quote}</p>
+          <span className="absolute -bottom-[24px] right-0 text-[2.5rem] leading-none sm:text-[3rem]" style={{ fontFamily:FC, fontWeight:600, color:"#abb2bf" }}>"</span>
           <p className="mt-[24px]" style={{ fontFamily:FC, fontWeight:600, fontSize:16, color:"#abb2bf" }}>— {t.quoteAuthor}</p>
         </div>
       </section>
@@ -950,42 +953,42 @@ function HomePage({ nav, t }: { nav: (p: Page) => void; t: TType }) {
           </div>
         )},
       ].map(({ section, page, content }) => (
-        <section key={section} className="px-[24px] lg:px-[80px] py-[48px]">
-          <div className="flex items-center justify-between mb-[32px]">
+        <section key={section} className={PAGE_SECTION_CLASS}>
+          <div className="flex flex-col gap-3 mb-[32px] sm:flex-row sm:items-center sm:justify-between">
             <SH label={section}/>
-            <button onClick={() => nav(page)} className="shrink-0 ml-[16px] hover:opacity-75 transition-opacity" style={{ fontFamily:FC, fontSize:15, color:"#abb2bf", whiteSpace:"nowrap" }}>{t.btns.viewAll}</button>
+            <button onClick={() => nav(page)} className="shrink-0 hover:opacity-75 transition-opacity self-start sm:self-auto" style={{ fontFamily:FC, fontSize:15, color:"#abb2bf" }}>{t.btns.viewAll}</button>
           </div>
           {content}
         </section>
       ))}
 
-      <section className="px-[24px] lg:px-[80px] py-[48px]">
+      <section className={PAGE_SECTION_CLASS}>
         <SH label={t.sections.aboutMe}/>
-        <div className="grid lg:grid-cols-2 gap-[48px] items-start mt-[32px]">
+        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-12 mt-[32px]">
           <div className="flex flex-col gap-[16px]">
             {t.bio.map((p,i)=><p key={i} style={{ fontFamily:FC, fontSize:16, color:"#abb2bf", lineHeight:"26px" }}>{p}</p>)}
             <div className="mt-[8px]"><Btn purple onClick={() => nav("about-me")}>{t.btns.readMore}</Btn></div>
           </div>
           <div className="relative flex justify-center">
-            <div className="absolute top-0 left-0"><DotGrid rows={5} cols={5}/></div>
-            <div className="overflow-hidden mt-[40px]" style={{ width:280, height:370 }}>
+            <div className="absolute top-0 left-0 hidden sm:block"><DotGrid rows={5} cols={5}/></div>
+            <div className="mt-[40px] aspect-[280/370] w-full max-w-[17.5rem] overflow-hidden">
               <img src={imgAboutPerson} alt={DATA.personal.name} className="w-full h-full object-cover object-top"/>
             </div>
-            <div className="absolute bottom-0 right-0"><DotGrid rows={5} cols={5}/></div>
-            <div className="absolute bottom-0 left-0 h-px w-[220px]" style={{ background:"#c778dd" }}/>
+            <div className="absolute bottom-0 right-0 hidden sm:block"><DotGrid rows={5} cols={5}/></div>
+            <div className="absolute bottom-0 left-0 hidden sm:block h-px w-[220px]" style={{ background:"#c778dd" }}/>
           </div>
         </div>
       </section>
 
-      <section className="px-[24px] lg:px-[80px] py-[48px]">
+      <section className={PAGE_SECTION_CLASS}>
         <SH label={t.sections.contacts}/>
-        <div className="grid lg:grid-cols-2 gap-[48px] mt-[32px] items-start">
+        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-12 mt-[32px]">
           <p style={{ fontFamily:FC, fontSize:16, color:"#abb2bf", lineHeight:"26px", maxWidth:505 }}>{t.openTo}</p>
-          <div className="flex flex-col gap-[10px] p-[16px] w-fit" style={{ border:"1px solid #abb2bf" }}>
+          <div className="flex w-full flex-col gap-[10px] p-[16px] sm:w-fit max-w-full" style={{ border:"1px solid #abb2bf" }}>
             <p style={{ fontFamily:FC, fontWeight:600, fontSize:16, color:"#fff" }}>{t.btns.reachMe}</p>
-            <a href={DATA.personal.linkedinUrl} target="_blank" rel="noreferrer" className="flex items-center gap-[8px] hover:opacity-75 transition-opacity"><LinkedInIcon size={17}/><span style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>linkedin.com/in/saurabh-babalsure</span></a>
-            <a href={`mailto:${DATA.personal.email}`} className="flex items-center gap-[8px] hover:opacity-75 transition-opacity"><EmailIcon size={15}/><span style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>{DATA.personal.email}</span></a>
-            <div className="flex items-center gap-[8px]"><PhoneIcon size={15}/><span style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>{DATA.personal.phone}</span></div>
+            <a href={DATA.personal.linkedinUrl} target="_blank" rel="noreferrer" className="flex items-center gap-[8px] hover:opacity-75 transition-opacity min-w-0"><LinkedInIcon size={17}/><span className="break-all" style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>linkedin.com/in/saurabh-babalsure</span></a>
+            <a href={`mailto:${DATA.personal.email}`} className="flex items-center gap-[8px] hover:opacity-75 transition-opacity min-w-0"><EmailIcon size={15}/><span className="break-all" style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>{DATA.personal.email}</span></a>
+            <div className="flex items-center gap-[8px] min-w-0"><PhoneIcon size={15}/><span className="break-words" style={{ fontFamily:FC, fontSize:14, color:"#abb2bf" }}>{DATA.personal.phone}</span></div>
           </div>
         </div>
       </section>
@@ -994,22 +997,22 @@ function HomePage({ nav, t }: { nav: (p: Page) => void; t: TType }) {
 }
 
 function SkillsPage({ t }: { t: TType }) {
-  return <div className="px-[24px] lg:px-[80px] py-[48px]"><PH label={t.pages.skills} sub={t.pages.skillsSub}/><SkillGrid t={t}/></div>;
+  return <div className={PAGE_SECTION_CLASS}><PH label={t.pages.skills} sub={t.pages.skillsSub}/><SkillGrid t={t}/></div>;
 }
 
 function WorksPage({ t }: { t: TType }) {
   return (
-    <div className="px-[24px] lg:px-[80px] py-[48px]">
+    <div className={PAGE_SECTION_CLASS}>
       <PH label={t.pages.projects} sub={t.pages.worksSub}/>
       <div className="mt-[40px]">
         <p style={{ fontFamily:FC, fontWeight:500, fontSize:26, color:"#fff", marginBottom:24 }}><span style={{ color:"#c778dd" }}>#</span>{t.pages.completeApps}</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-[16px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-[16px]">
           {DATA.projects.map((p,i)=><ProjectCard key={i} proj={p} desc={t.projectDescs[i]} context={t.projectContexts[i]} t={t}/>)}
         </div>
       </div>
       <div className="mt-[48px]">
         <p style={{ fontFamily:FC, fontWeight:500, fontSize:26, color:"#fff", marginBottom:24 }}><span style={{ color:"#c778dd" }}>#</span>{t.pages.smallProjects}</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-[16px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-[16px]">
           {DATA.smallProjects.map((p,i)=><SmallCard key={i} proj={p} desc={t.smallProjectDescs[i]} t={t}/>)}
         </div>
       </div>
@@ -1019,11 +1022,11 @@ function WorksPage({ t }: { t: TType }) {
 
 function ExperiencePage({ t }: { t: TType }) {
   return (
-    <div className="px-[24px] lg:px-[80px] py-[48px]">
+    <div className={PAGE_SECTION_CLASS}>
       <PH label={t.pages.experience} sub={t.pages.expSub}/>
       <div className="mt-[40px] flex flex-col gap-[16px]">
-        <div className="flex flex-col gap-[12px] p-[24px]" style={{ border:"1px solid #abb2bf" }}>
-          <div className="flex flex-wrap items-start justify-between gap-[12px]">
+        <div className="flex flex-col gap-[12px] p-[20px] sm:p-[24px]" style={{ border:"1px solid #abb2bf" }}>
+          <div className="flex flex-col gap-[12px] sm:flex-row sm:items-start sm:justify-between sm:gap-[12px]">
             <div className="flex items-start gap-[12px]">
               <div className="size-[36px] shrink-0 flex items-center justify-center" style={{ background:"#c778dd" }}><Briefcase size={17} color="#fff"/></div>
               <div>
@@ -1034,7 +1037,7 @@ function ExperiencePage({ t }: { t: TType }) {
                 <p style={{ fontFamily:FC, fontSize:14, color:"#abb2bf", marginTop:4 }}>{t.expCompany}</p>
               </div>
             </div>
-            <p style={{ fontFamily:FC, fontSize:14, color:"#c778dd", whiteSpace:"nowrap" }}>Dec 2025 – Present</p>
+            <p className="sm:text-right" style={{ fontFamily:FC, fontSize:14, color:"#c778dd" }}>Dec 2025 – Present</p>
           </div>
           <div className="h-px w-full" style={{ background:"#abb2bf" }}/>
           <p style={{ fontFamily:FC, fontSize:15, color:"#abb2bf", lineHeight:"24px" }}>{t.expDesc}</p>
@@ -1045,20 +1048,20 @@ function ExperiencePage({ t }: { t: TType }) {
 }
 
 function EducationPage({ t }: { t: TType }) {
-  return <div className="px-[24px] lg:px-[80px] py-[48px]"><PH label={t.pages.education} sub={t.pages.eduSub}/><EduGrid t={t}/></div>;
+  return <div className={PAGE_SECTION_CLASS}><PH label={t.pages.education} sub={t.pages.eduSub}/><EduGrid t={t}/></div>;
 }
 
 function CertificationsPage({ t }: { t: TType }) {
-  return <div className="px-[24px] lg:px-[80px] py-[48px]"><PH label={t.pages.certifications} sub={t.pages.certSub}/><CertGrid t={t}/></div>;
+  return <div className={PAGE_SECTION_CLASS}><PH label={t.pages.certifications} sub={t.pages.certSub}/><CertGrid t={t}/></div>;
 }
 
 function AchievementsPage({ t }: { t: TType }) {
   return (
-    <div className="px-[24px] lg:px-[80px] py-[48px]">
+    <div className={PAGE_SECTION_CLASS}>
       <PH label={t.pages.achievements} sub={t.pages.achieveSub}/>
       <div className="mt-[40px] flex flex-col">
         {t.achievements.map((a,i)=>(
-          <div key={i} className="flex items-start gap-[16px] px-[20px] py-[20px]" style={{ border:"1px solid #abb2bf", borderTop:i===0?"1px solid #abb2bf":"none" }}>
+          <div key={i} className="flex items-start gap-[16px] px-[16px] py-[16px] sm:px-[20px] sm:py-[20px]" style={{ border:"1px solid #abb2bf", borderTop:i===0?"1px solid #abb2bf":"none" }}>
             <div className="size-[28px] shrink-0 flex items-center justify-center" style={{ background:"#c778dd" }}>
               <span style={{ fontFamily:FC, fontWeight:700, fontSize:13, color:"#fff" }}>{i+1}</span>
             </div>
@@ -1072,21 +1075,21 @@ function AchievementsPage({ t }: { t: TType }) {
 
 function AboutPage({ t }: { t: TType }) {
   return (
-    <div className="px-[24px] lg:px-[80px] py-[48px]">
+    <div className={PAGE_SECTION_CLASS}>
       <PH label={t.pages.aboutMe} sub={t.pages.aboutSub}/>
-      <div className="grid lg:grid-cols-2 gap-[48px] items-start mt-[40px]">
+      <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-12 mt-[40px]">
         <div className="flex flex-col gap-[16px]">
           {t.bio.map((p,i)=><p key={i} style={{ fontFamily:FC, fontSize:16, color:"#abb2bf", lineHeight:"26px" }}>{p}</p>)}
         </div>
         <div className="relative flex justify-center">
-          <div className="absolute top-0 left-0"><DotGrid rows={5} cols={5}/></div>
-          <div className="overflow-hidden mt-[40px]" style={{ width:280, height:400 }}>
+          <div className="absolute top-0 left-0 hidden sm:block"><DotGrid rows={5} cols={5}/></div>
+          <div className="mt-[40px] aspect-[280/400] w-full max-w-[17.5rem] overflow-hidden">
             <img src={imgAboutPerson} alt={DATA.personal.name} className="w-full h-full object-cover object-top"/>
           </div>
-          <div className="absolute bottom-0 right-0"><DotGrid rows={5} cols={5}/></div>
+          <div className="absolute bottom-0 right-0 hidden sm:block"><DotGrid rows={5} cols={5}/></div>
         </div>
       </div>
-      <div className="mt-[48px] grid sm:grid-cols-2 gap-[32px]">
+      <div className="mt-[48px] grid grid-cols-1 sm:grid-cols-2 gap-[32px]">
         <div>
           <SH label={t.sections.languages}/>
           <div className="flex flex-col mt-[24px]">
@@ -1110,8 +1113,8 @@ function AboutPage({ t }: { t: TType }) {
         </div>
       </div>
       <div className="mt-[48px]">
-        <div className="flex items-center gap-[16px] mb-[24px]">
-          <p style={{ fontFamily:FC, fontWeight:500, fontSize:30, color:"#fff", whiteSpace:"nowrap" }}>
+        <div className="flex items-center gap-[16px] mb-[24px] min-w-0">
+          <p className="text-[clamp(1.5rem,4vw,1.875rem)] leading-none whitespace-normal" style={{ fontFamily:FC, fontWeight:500, color:"#fff" }}>
             <span style={{ color:"#c778dd" }}>#</span>{t.sections.funFacts}
           </p>
           <div className="hidden lg:block ml-[8px]"><DotGrid rows={3} cols={8}/></div>
@@ -1130,19 +1133,19 @@ function AboutPage({ t }: { t: TType }) {
 
 function ContactsPage({ t }: { t: TType }) {
   return (
-    <div className="px-[24px] lg:px-[80px] py-[48px]">
+    <div className={PAGE_SECTION_CLASS}>
       <PH label={t.pages.contacts} sub={t.pages.contactSub}/>
-      <div className="grid lg:grid-cols-2 gap-[48px] mt-[40px] items-start">
+      <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-12 mt-[40px]">
         <p style={{ fontFamily:FC, fontSize:16, color:"#abb2bf", lineHeight:"26px", maxWidth:505 }}>{t.openTo}</p>
-        <div className="flex flex-wrap gap-[16px]">
-          <div className="flex flex-col gap-[10px] p-[16px]" style={{ border:"1px solid #abb2bf", minWidth:190 }}>
+        <div className="flex flex-col gap-[16px] sm:flex-row sm:flex-wrap">
+          <div className="flex w-full min-w-0 flex-col gap-[10px] p-[16px] sm:flex-1 sm:min-w-[190px]" style={{ border:"1px solid #abb2bf" }}>
             <p style={{ fontFamily:FC, fontWeight:600, fontSize:15, color:"#fff" }}>{t.btns.callWhatsapp}</p>
-            <div className="flex items-center gap-[8px]"><PhoneIcon size={15}/><span style={{ fontFamily:FC, fontSize:15, color:"#abb2bf" }}>{DATA.personal.phone}</span></div>
+            <div className="flex items-center gap-[8px] min-w-0"><PhoneIcon size={15}/><span className="break-words" style={{ fontFamily:FC, fontSize:15, color:"#abb2bf" }}>{DATA.personal.phone}</span></div>
           </div>
-          <div className="flex flex-col gap-[10px] p-[16px]" style={{ border:"1px solid #abb2bf", minWidth:220 }}>
+          <div className="flex w-full min-w-0 flex-col gap-[10px] p-[16px] sm:flex-1 sm:min-w-[220px]" style={{ border:"1px solid #abb2bf" }}>
             <p style={{ fontFamily:FC, fontWeight:600, fontSize:15, color:"#fff" }}>{t.btns.messageMe}</p>
-            <a href={DATA.personal.linkedinUrl} target="_blank" rel="noreferrer" className="flex items-center gap-[8px] hover:opacity-75 transition-opacity"><LinkedInIcon size={17}/><span style={{ fontFamily:FC, fontSize:13, color:"#abb2bf" }}>linkedin.com/in/saurabh-babalsure</span></a>
-            <a href={`mailto:${DATA.personal.email}`} className="flex items-center gap-[8px] hover:opacity-75 transition-opacity"><EmailIcon size={15}/><span style={{ fontFamily:FC, fontSize:13, color:"#abb2bf" }}>{DATA.personal.email}</span></a>
+            <a href={DATA.personal.linkedinUrl} target="_blank" rel="noreferrer" className="flex items-center gap-[8px] hover:opacity-75 transition-opacity min-w-0"><LinkedInIcon size={17}/><span className="break-all" style={{ fontFamily:FC, fontSize:13, color:"#abb2bf" }}>linkedin.com/in/saurabh-babalsure</span></a>
+            <a href={`mailto:${DATA.personal.email}`} className="flex items-center gap-[8px] hover:opacity-75 transition-opacity min-w-0"><EmailIcon size={15}/><span className="break-all" style={{ fontFamily:FC, fontSize:13, color:"#abb2bf" }}>{DATA.personal.email}</span></a>
           </div>
         </div>
       </div>
@@ -1164,7 +1167,24 @@ export default function App() {
   const [page, setPage] = useState<Page>("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const [lang, setLang] = useState<LangKey>("en");
+  const bodyOverflowRef = useRef<string | null>(null);
   const t = T[lang];
+
+  useEffect(() => {
+    if (menuOpen) {
+      bodyOverflowRef.current = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+    } else if (bodyOverflowRef.current !== null) {
+      document.body.style.overflow = bodyOverflowRef.current;
+      bodyOverflowRef.current = null;
+    }
+    return () => {
+      if (bodyOverflowRef.current !== null) {
+        document.body.style.overflow = bodyOverflowRef.current;
+        bodyOverflowRef.current = null;
+      }
+    };
+  }, [menuOpen]);
 
   const nav = (p: Page) => { setPage(p); setMenuOpen(false); window.scrollTo({ top:0, behavior:"smooth" }); };
 
@@ -1181,8 +1201,8 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen" style={{ background:"#282c33", color:"#fff" }}>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-[24px] lg:px-[60px] pt-[14px] pb-[10px]" style={{ background:"#282c33" }}>
+    <div className="min-h-screen overflow-x-clip" style={{ background:"#282c33", color:"#fff" }}>
+      <header className="fixed top-0 left-0 right-0 z-50 flex h-16 items-center justify-between px-4 sm:px-6 lg:px-[60px]" style={{ background:"#282c33" }}>
         <button onClick={() => nav("home")} className="flex items-center gap-[8px] shrink-0 hover:opacity-75 transition-opacity">
           <LogoMark/><span style={{ fontFamily:FC, fontWeight:700, fontSize:16, color:"#fff" }}>{DATA.personal.handle}</span>
         </button>
@@ -1197,7 +1217,7 @@ export default function App() {
         </nav>
         <div className="lg:hidden flex items-center gap-[12px]">
           <LangSwitcher lang={lang} setLang={setLang}/>
-          <button className="flex flex-col gap-[5px]" onClick={() => setMenuOpen(!menuOpen)}>
+          <button className="flex flex-col gap-[5px]" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation menu">
             <div className="h-[2px] w-[24px]" style={{ background:"#d9d9d9" }}/>
             {!menuOpen && <div className="h-[2px] w-[15px] self-end" style={{ background:"#d9d9d9" }}/>}
           </button>
@@ -1205,12 +1225,12 @@ export default function App() {
       </header>
 
       {menuOpen && (
-        <div className="fixed inset-0 z-40 flex flex-col px-[24px] pt-[80px] pb-[32px] gap-[14px] overflow-y-auto" style={{ background:"#282c33" }}>
+        <div className="fixed inset-0 z-40 flex flex-col gap-[14px] overflow-y-auto px-4 sm:px-6 pt-[5.5rem] pb-8" style={{ background:"#282c33" }}>
           <button className="absolute top-[16px] right-[20px]" onClick={() => setMenuOpen(false)}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><line x1="3" y1="3" x2="21" y2="21" stroke="#d9d9d9" strokeWidth="2"/><line x1="21" y1="3" x2="3" y2="21" stroke="#d9d9d9" strokeWidth="2"/></svg>
           </button>
           {navLinks.map(({ key, label }) => (
-            <button key={key} onClick={() => nav(key)} className="flex items-start text-left" style={{ fontFamily:FC, fontWeight:500, fontSize:22, lineHeight:"normal" }}>
+            <button key={key} onClick={() => nav(key)} className="flex items-start text-left text-[1.25rem] sm:text-[1.375rem]" style={{ fontFamily:FC, fontWeight:500, lineHeight:"normal" }}>
               <span style={{ color:"#c778dd" }}>#</span><span style={{ color:"#fff" }}>{label}</span>
             </button>
           ))}
@@ -1220,7 +1240,7 @@ export default function App() {
 
       <MediaSidebar/>
 
-      <main className="pt-[64px] lg:pl-[54px]">
+      <main className="pt-16 lg:pl-[54px]">
         {page==="home"           && <HomePage nav={nav} t={t}/>}
         {page==="about-me"       && <AboutPage t={t}/>}
         {page==="skills"         && <SkillsPage t={t}/>}
