@@ -923,7 +923,18 @@ function HomePage({ nav, t }: { nav: (p: Page) => void; t: TType }) {
             <p style={{ fontFamily:FC, fontSize:14, color:"#abb2bf", lineHeight:"22px" }}>{t.expDesc}</p>
           </div>
         )},
-        { section: t.sections.certifications, page:"certifications" as Page, content: <CertGrid t={t}/> },
+        { section: t.sections.achievements, page:"achievements" as Page, content: (
+          <div className="mt-[8px] grid sm:grid-cols-2 gap-[12px]">
+            {t.achievements.map((a,i)=>(
+              <div key={i} className="flex items-start gap-[12px] px-[16px] py-[12px]" style={{ border:"1px solid #abb2bf" }}>
+                <div className="size-[28px] shrink-0 flex items-center justify-center" style={{ background:"#c778dd" }}>
+                  <span style={{ fontFamily:FC, fontWeight:700, fontSize:13, color:"#fff" }}>{i+1}</span>
+                </div>
+                <p style={{ fontFamily:FC, fontSize:14, color:"#abb2bf", lineHeight:"22px" }}>{a}</p>
+              </div>
+            ))}
+          </div>
+        )},
       ].map(({ section, page, content }) => (
         <section key={section} className="px-[24px] lg:px-[80px] py-[48px]">
           <div className="flex items-center justify-between mb-[32px]">
