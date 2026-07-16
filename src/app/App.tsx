@@ -906,7 +906,8 @@ function HomePage({ nav, t }: { nav: (p: Page) => void; t: TType }) {
       </section>
 
       {[
-        { section: t.sections.projects, page:"projects" as Page, content: <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-[16px]">{DATA.projects.map((p,i)=><ProjectCard key={i} proj={p} desc={t.projectDescs[i]} context={t.projectContexts[i]} t={t}/>)}</div> },
+        { section: t.pages.completeApps, page:"projects" as Page, content: <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-[16px]">{DATA.projects.map((p,i)=><ProjectCard key={i} proj={p} desc={t.projectDescs[i]} context={t.projectContexts[i]} t={t}/>)}</div> },
+        { section: t.pages.smallProjects, page:"projects" as Page, content: <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-[16px]">{DATA.smallProjects.map((p,i)=><SmallCard key={i} proj={p} desc={t.smallProjectDescs[i]} t={t}/>)}</div> },
         { section: t.sections.skills, page:"skills" as Page, content: <SkillGrid t={t}/> },
         { section: t.sections.experience, page:"experience" as Page, content: (
           <div className="flex flex-col gap-[12px] p-[20px]" style={{ border:"1px solid #abb2bf" }}>
