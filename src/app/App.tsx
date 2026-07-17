@@ -85,7 +85,7 @@ const T = {
     expRole: "Freelance Data Consultant",
     expCompany: "Independent / Freelance Team",
     expType: "Freelance",
-    expDesc: "Collaborated in a freelance team to deliver web applications and analytical pipelines for SMEs. Built automated data workflows and marketing analytics, transforming sales and service metrics into actionable insights to drive business growth.",
+    expDesc: "Collaborating in a freelance team to deliver web applications and analytical pipelines for SMEs. Built automated data workflows and marketing analytics, transforming sales and service metrics into actionable insights to drive business growth.",
     // PROJECTS
     projectDescs: [
       "End-to-end Kappa streaming platform for 50K simulated vehicles using Azure Event Hubs, Databricks (PySpark), and Delta Lake. Real-time pipelines with ML anomaly detection via Isolation Forest, MongoDB Atlas, ADLS Gen2, and Power BI dashboards.",
