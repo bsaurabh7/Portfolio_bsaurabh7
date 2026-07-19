@@ -18,7 +18,7 @@ const DATA = {
     kaggleUrl: "https://kaggle.com/bsaurabh7",
   },
   projects: [
-    { name: "OmniStream – Fleet Telemetry & Lakehouse", stack: ["Azure Event Hubs","Databricks","PySpark","Delta Lake","MongoDB","Power BI"], liveUrl: null as null, githubUrl: "https://github.com/bsaurabh7" },
+    { name: "OmniStream – Fleet Telemetry & Lakehouse Platform", stack: ["Azure Event Hubs","Databricks","PySpark","Delta Lake","MongoDB","Power BI"], liveUrl: null as null, githubUrl: "https://github.com/bsaurabh7" },
     { name: "Arthmize – AI Money Mentor",              stack: ["Vite","React","FastAPI","Supabase","Qwen 2.5","Playwright"],              liveUrl: null as null, githubUrl: "https://github.com/bsaurabh7" },
     { name: "Qualify – AI Voice Bot",                  stack: ["Whisper","GPT-3.5","RAG","Node.js","Twilio","React.js"],                  liveUrl: null as null, githubUrl: "https://github.com/bsaurabh7" },
     { name: "SymAI – AI-Based OPD Assistance System",  stack: ["Whisper AI","NLP","Qwen/GPT","Next.js","Node.js","FastAPI","MySQL","MongoDB"], liveUrl: null as null, githubUrl: "https://github.com/bsaurabh7" },
